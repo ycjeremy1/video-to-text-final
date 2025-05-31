@@ -2,8 +2,7 @@ from flask import Flask, render_template, request, jsonify, send_from_directory
 import os
 from werkzeug.utils import secure_filename
 from pathlib import Path
-from backend import server,summarize
-
+from backend import summarize,translation,server
 
 
 
@@ -80,13 +79,21 @@ def uploaded_file(filename):
 
 @app.route('/api/summarize', methods=['GET'])
 def summarizetext():
-    return summarize.summarize(str(upload_path / file_names[0]))
+    index = request.args.get('index')
+    return summarize.summarize(str(upload_path / file_names[int(index)]))
 
 
 
 @app.route('/api/transcription', methods=['GET'])
 def transcribevideo():
-    return server.local_transcribe(str(upload_path / file_names[0]))
+    index = request.args.get('index')
+    return server.local_transcribe(str(upload_path / file_names[int(index)]))
+
+
+@app.route('/api/translate', methods=['GET'])
+def translate():
+    index = request.args.get('index')
+    return translation.run_translate(str(upload_path / file_names[int(index)]))
 
 if __name__ == '__main__':
     print(f"Server running. Upload directory: {upload_path}")
