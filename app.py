@@ -93,7 +93,7 @@ def transcribevideo():
 @app.route('/api/translate', methods=['GET'])
 def translate():
     index = request.args.get('index')
-    return translation.run_translate(str(upload_path / file_names[int(index)]))
+    return (translation.run_translate(str(upload_path / file_names[int(index)])))["translated"]
 
 if __name__ == '__main__':
     print(f"Server running. Upload directory: {upload_path}")

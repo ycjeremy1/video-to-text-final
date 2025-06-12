@@ -16,7 +16,7 @@ async def translate_text(file):
             'dest_lang': translation.dest
         }
         
-      return jsonify(response_data)
+      return response_data
 
 
 
